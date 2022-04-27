@@ -7,8 +7,9 @@ export class MovieList extends Component {
     super()
 
     this.state={
-      hover : ''
-    }
+      hover : '',
+      parr : [1],
+    };
   }
 
   render() {
@@ -31,7 +32,7 @@ export class MovieList extends Component {
                 <div className="button-wrapper" style={{display : 'flex', justifyContent: 'center'}}>
 
                   {
-                    this.state.hover == movieElem.id && <a href="#" className="btn btn-primary movies-button text-center">Add to Favourites</a> 
+                    this.state.hover == movieElem.id && (<a href="#" className="btn btn-primary movies-button text-center">Add to Favourites</a>) 
                   }
                               
                 </div>
@@ -46,9 +47,12 @@ export class MovieList extends Component {
           <nav aria-label="Page navigation example">
             <ul class="pagination">
               <li class="page-item"><a class="page-link" href="#">Previous</a></li>
-              <li class="page-item"><a class="page-link" href="#">1</a></li>
-              <li class="page-item"><a class="page-link" href="#">2</a></li>
-              <li class="page-item"><a class="page-link" href="#">3</a></li>
+              {
+                this.state.parr.map((value)=>(
+                  <li class="page-item"><a class="page-link" href="#">{value}</a></li>
+                ))
+              }
+              
               <li class="page-item"><a class="page-link" href="#">Next</a></li>
             </ul>
           </nav>

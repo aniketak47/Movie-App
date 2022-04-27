@@ -3,6 +3,14 @@ import React, { Component } from 'react'
 import { movies } from '../movieData'
 
 export class MovieList extends Component {
+  constructor(){
+    super()
+
+    this.state={
+      hover : ''
+    }
+  }
+
   render() {
     let moviesArr = movies.results
 
@@ -15,13 +23,17 @@ export class MovieList extends Component {
         <div className="movies-list">
           {
             moviesArr.map((movieElem)=>(
-              <div className="card movie-card">
+              <div className="card movie-card" onMouseEnter={()=> this.setState({hover:movieElem.id})} onMouseLeave={()=> this.setState({hover: ''})}>
                 <img src={`https://image.tmdb.org/t/p/original${movieElem.backdrop_path}`} style={{height: '40vh', width: '20vw'}} className="card-img-top movie-img" alt="..."/>
                 
                 <h5 className="card-title movie-title">{movieElem.title}</h5>   
 
                 <div className="button-wrapper" style={{display : 'flex', justifyContent: 'center'}}>
-                  <a href="#" className="btn btn-primary movies-button text-center">Add to Favourites</a>             
+
+                  {
+                    this.state.hover == movieElem.id && <a href="#" className="btn btn-primary movies-button text-center">Add to Favourites</a> 
+                  }
+                              
                 </div>
 
                           

@@ -16,9 +16,14 @@ export class MovieList extends Component {
           {
             moviesArr.map((movieElem)=>(
               <div className="card movie-card">
-                <img src="http://exclaim.ca/images/avatar_3.jpg" style={{height: '40vh', width: '20vw'}} className="card-img-top movie-img" alt="..."/>
+                <img src={`https://image.tmdb.org/t/p/original${movieElem.backdrop_path}`} style={{height: '40vh', width: '20vw'}} className="card-img-top movie-img" alt="..."/>
                 
-                  <h5 className="card-title banner-title">{movieElem.title}</h5>                  
+                <h5 className="card-title movie-title">{movieElem.title}</h5>   
+
+                <div className="button-wrapper" style={{display : 'flex', justifyContent: 'center'}}>
+                  <a href="#" className="btn btn-primary movies-button text-center">Add to Favourites</a>             
+                </div>
+
                           
               </div>
             ))

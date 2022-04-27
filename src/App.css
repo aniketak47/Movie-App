@@ -67,3 +67,10 @@
   font-size: 1.3rem;
   color: #fff;
 }
+
+.movies-list{
+  display: flex;
+  padding: 1rem;
+  justify-content: center;
+  flex-wrap: wrap;
+}

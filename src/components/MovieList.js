@@ -1,6 +1,6 @@
-import React, { Component } from 'react'
+import React, { Component } from "react";
 
-import { movies } from '../movieData'
+ import { movies } from "../movieData";
 
 import axios from 'axios'
 
@@ -12,12 +12,13 @@ export class MovieList extends Component {
     this.state = {
       hover: "",
       parr: [1],
-      movies : []
+      movies : [],
+      currPage : 1
     };
   }
 
   async componentDidMount(){
-         const res = await axios.get(`https://api.themoviedb.org/3/movie/popular?api_key=499d932620eacdab75bb523c0cee2fec&language=en-US&page=1`)
+         const res = await axios.get(`https://api.themoviedb.org/3/movie/popular?api_key=0b5415eb9bf023d556ef265b425e0e4a&language=en-US&page=${this.state.currPage}`)
          let movieData = res.data
          console.log(movieData)
 
@@ -28,54 +29,110 @@ export class MovieList extends Component {
          console.log('mounting done with CDM third')
   }
 
+  changeMovies = async()=>{
+    const res = await axios.get(`https://api.themoviedb.org/3/movie/popular?api_key=0b5415eb9bf023d556ef265b425e0e4a&language=en-US&page=${this.state.currPage}`)
+    let movieData = res.data
+    console.log(movieData)
+
+    this.setState({
+      movies : [...movieData.results]
+    })
+  }
+
+  handleNext=()=>{
+         let tempArr = []
+
+
+         for(let i=1 ; i<=this.state.parr.length+1 ; i++){
+           tempArr.push(i)
+          
+         }
+
+         console.log(tempArr)
+
+         this.setState({
+            parr:[...tempArr],
+            currPage:this.state.currPage+1
+         }, this.changeMovies)
+
+         
+  }
+
+
+
   render() {
-    
+    console.log('render second')
 
     return (
       <>
         <div>
-          <h3 className='text-center'><strong>Trending</strong></h3>
+          <h3 className="text-center">
+            <strong>Trending</strong>
+          </h3>
         </div>
 
         <div className="movies-list">
-          {
-            this.state.movies.map((movieElem)=>(
-              <div className="card movie-card" onMouseEnter={()=> this.setState({hover:movieElem.id})} onMouseLeave={()=> this.setState({hover: ''})}>
-                <img src={`https://image.tmdb.org/t/p/original${movieElem.backdrop_path}`} style={{height: '40vh', width: '20vw'}} className="card-img-top movie-img" alt="..."/>
-                
-                <h5 className="card-title movie-title">{movieElem.title}</h5>   
+          {this.state.movies.map((movieElem) => (
+            <div
+              className="card movie-card"
+              onMouseEnter={() => this.setState({ hover: movieElem.id })}
+              onMouseLeave={() => this.setState({ hover: "" })}
+            >
+              <img
+                src={`https://image.tmdb.org/t/p/original${movieElem.backdrop_path}`}
+                style={{ height: "40vh", width: "20vw" }}
+                className="card-img-top movie-img"
+                alt="..."
+              />
 
-                <div className="button-wrapper" style={{display : 'flex', justifyContent: 'center'}}>
+              <h5 className="card-title movie-title">{movieElem.title}</h5>
 
-                  {
-                    this.state.hover == movieElem.id && (<a href="#" className="btn btn-primary movies-button text-center">Add to Favourites</a>) 
-                  }
-                              
-                </div>
-
-                          
+              <div
+                className="button-wrapper"
+                style={{ display: "flex", justifyContent: "center" }}
+              >
+                {this.state.hover == movieElem.id && (
+                  <a
+                    href="#"
+                    className="btn btn-primary movies-button text-center"
+                  >
+                    Add to Favourites
+                  </a>
+                )}
               </div>
-            ))
-          }
+            </div>
+          ))}
         </div>
-
-        <div style={{display:'flex', justifyContent:'center'}}>
+        <div style={{ display: "flex", justifyContent: "center" }}>
           <nav aria-label="Page navigation example">
-            <ul class="pagination">
-              <li class="page-item"><a class="page-link" href="#">Previous</a></li>
-              {
-                this.state.parr.map((value)=>(
-                  <li class="page-item"><a class="page-link" href="#">{value}</a></li>
-                ))
-              }
-              
-              <li class="page-item"><a class="page-link" href="#">Next</a></li>
+            <ul className="pagination">
+              <li className="page-item">
+                <a className="page-link" href="#">
+                  Previous
+                </a>
+              </li>
+
+              {this.state.parr.map((value) => (
+                <li class="page-item">
+                  <a class="page-link" href="#">
+                    {value}
+                  </a>
+                </li>
+              ))}
+
+              <li className="page-item">
+                <a className="page-link" onClick={this.handleNext}>
+                  Next
+                </a>
+              </li>
             </ul>
           </nav>
         </div>
       </>
-    )
+    );
   }
 }
 
-export default MovieList
+export default MovieList;
+
+// https://api.themoviedb.org/3/movie/popular?api_key=499d932620eacdab75bb523c0cee2fec&language=en-US&page=1

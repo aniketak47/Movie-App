@@ -2,18 +2,34 @@ import React, { Component } from 'react'
 
 import { movies } from '../movieData'
 
-export class MovieList extends Component {
-  constructor(){
-    super()
+import axios from 'axios'
 
-    this.state={
-      hover : '',
-      parr : [1],
+export class MovieList extends Component {
+  constructor() {
+    console.log('construtor first')
+    super();
+
+    this.state = {
+      hover: "",
+      parr: [1],
+      movies : []
     };
   }
 
+  async componentDidMount(){
+         const res = await axios.get(`https://api.themoviedb.org/3/movie/popular?api_key=499d932620eacdab75bb523c0cee2fec&language=en-US&page=1`)
+         let movieData = res.data
+         console.log(movieData)
+
+         this.setState({
+           movies : [...movieData.results]
+         })
+
+         console.log('mounting done with CDM third')
+  }
+
   render() {
-    let moviesArr = movies.results
+    
 
     return (
       <>
@@ -23,7 +39,7 @@ export class MovieList extends Component {
 
         <div className="movies-list">
           {
-            moviesArr.map((movieElem)=>(
+            this.state.movies.map((movieElem)=>(
               <div className="card movie-card" onMouseEnter={()=> this.setState({hover:movieElem.id})} onMouseLeave={()=> this.setState({hover: ''})}>
                 <img src={`https://image.tmdb.org/t/p/original${movieElem.backdrop_path}`} style={{height: '40vh', width: '20vw'}} className="card-img-top movie-img" alt="..."/>
                 

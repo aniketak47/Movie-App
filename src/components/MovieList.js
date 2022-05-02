@@ -19,7 +19,7 @@ export class MovieList extends Component {
 
   async componentDidMount() {
     const res = await axios.get(
-      `https://api.themoviedb.org/3/movie/popular?api_key=0b5415eb9bf023d556ef265b425e0e4a&language=en-US&page=${this.state.currPage}`
+      `https://api.themoviedb.org/3/movie/popular?api_key=499d932620eacdab75bb523c0cee2fec&language=en-US&page=${this.state.currPage}`
     );
     let movieData = res.data;
     console.log(movieData);
@@ -33,7 +33,7 @@ export class MovieList extends Component {
 
   changeMovies = async () => {
     const res = await axios.get(
-      `https://api.themoviedb.org/3/movie/popular?api_key=0b5415eb9bf023d556ef265b425e0e4a&language=en-US&page=${this.state.currPage}`
+      `https://api.themoviedb.org/3/movie/popular?api_key=499d932620eacdab75bb523c0cee2fec&language=en-US&page=${this.state.currPage}`
     );
     let movieData = res.data;
     console.log(movieData);

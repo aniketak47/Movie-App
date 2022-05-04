@@ -14,11 +14,8 @@ function App() {
       <Routes>
         <Route path='/' element={<><Banner/> <MovieList/></>} />
         <Route path='/favourites' element={<Favourites/>} />
-      </Routes>
-
-      
-      
-      
+      </Routes>     
+            
     </BrowserRouter>
   );
 }

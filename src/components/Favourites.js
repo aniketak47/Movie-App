@@ -34,17 +34,27 @@ export class Favourites extends Component {
         })
     }
 
+    handleGenreChange=(genre)=>{
+        this.setState({
+            currgenre : genre
+        })
+    }
+
   render() {
       
 
       let genreids = {28:'Action',12:'Adventure',16:'Animation',35:'Comedy',80:'Crime',99:'Documentary',18:'Drama',10751:'Family',14:'Fantasy',36:'History',
        27:'Horror',10402:'Music',9648:'Mystery',10749:'Romance',878:'Sci-Fi',10770:'TV',53:'Thriller',10752:'War',37:'Western'};
 
-       
+       let filterArr = []
 
-       
-
-       
+       if(this.state.currgenre==='All Genres'){
+        filterArr = this.state.movies
+      }
+  
+      else{
+         filterArr = this.state.movies.filter((movieObj)=> genreids[movieObj.genre_ids[0]]== this.state.currgenre)
+      }
 
     return (
       <div className="main">
@@ -56,7 +66,7 @@ export class Favourites extends Component {
                         this.state.genres.map((genre)=>(
                             this.state.currgenre == genre ?
                             <li style={{background:'#3f51b5', color:'#ffff', fontWeight:'bold'}} class="list-group-item">{genre}</li>:
-                            <li style={{color:'#3f51b5'}} class="list-group-item">{genre}</li>
+                            <li style={{color:'#3f51b5'}} class="list-group-item" onClick={()=>this.handleGenreChange(genre)}>{genre}</li>
                         ))
                     }
 
@@ -84,7 +94,7 @@ export class Favourites extends Component {
                         </thead>
                         <tbody>
                             {
-                                this.state.movies.map((movieElem)=>(
+                                filterArr.map((movieElem)=>(
                                     <tr>
                                     <td>
                                     <img

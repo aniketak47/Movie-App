@@ -41,6 +41,50 @@ export class Favourites extends Component {
         })
     }
 
+    sortPopularityDesc=()=>{
+        let temp = this.state.movies
+        temp.sort(function(a,b){
+            return b.popularity-a.popularity;
+        })
+
+        this.setState({
+            movies : [...temp]
+        })
+    }
+
+    sortPopularityAsc=()=>{
+        let temp = this.state.movies
+        temp.sort(function(a,b){
+            return a.popularity-b.popularity;
+        })
+
+        this.setState({
+            movies : [...temp]
+        })
+    }
+
+    sortRatingDesc=()=>{
+        let temp = this.state.movies
+        temp.sort(function(a,b){
+            return b.vote_average-a.vote_average;
+        })
+
+        this.setState({
+            movies : [...temp]
+        })
+    }
+
+    sortRatingAsc=()=>{
+        let temp = this.state.movies
+        temp.sort(function(a,b){
+            return a.vote_average-b.vote_average;
+        })
+
+        this.setState({
+            movies : [...temp]
+        })
+    }
+
   render() {
       
 
@@ -54,7 +98,7 @@ export class Favourites extends Component {
        }else{
            filterArr = this.state.movies.filter((movieObj)=>{
                let title = movieObj.original_title.toLowerCase();
-               return title.includes(this.state.currText.toLowerCase())
+               return title.includes(this.state.currText.toLowerCase().trim())
            })
        }
 
@@ -95,8 +139,8 @@ export class Favourites extends Component {
                             <th scope="col"></th>
                             <th scope="col">Title</th>
                             <th scope="col">Genre</th>
-                            <th scope="col">Popularity</th>
-                            <th scope="col">Ratings</th>
+                            <th scope="col"><i class="fa-solid fa-sort-up" onClick={this.sortPopularityDesc}></i>Popularity<i class="fa-solid fa-sort-down" onClick={this.sortPopularityAsc}></i></th>
+                            <th scope="col"><i class="fa-solid fa-sort-up" onClick={this.sortRatingDesc}></i>Ratings<i class="fa-solid fa-sort-down" onClick={this.sortRatingAsc}></i></th>
                             {/* <th scope="col">Delete From List</th> */}
                             </tr>
                         </thead>
